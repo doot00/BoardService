@@ -1,9 +1,11 @@
 package com.mysite.sbb.answer;
 
+import java.time.LocalDate;
 import java.time.LocalDateTime;
 
 import com.mysite.sbb.question.Question;
 
+import com.mysite.sbb.user.SiteUser;
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
@@ -12,6 +14,7 @@ import jakarta.persistence.Id;
 import jakarta.persistence.ManyToOne;
 import lombok.Getter;
 import lombok.Setter;
+import org.springframework.cglib.core.Local;
 
 @Getter
 @Setter
@@ -28,4 +31,9 @@ public class Answer {
 
     @ManyToOne
     private Question question;
+
+    @ManyToOne
+    private SiteUser author;
+
+    private LocalDateTime modifyDate;
 }
