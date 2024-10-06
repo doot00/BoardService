@@ -4,10 +4,12 @@ import com.mysite.sbb.question.Question;
 import com.mysite.sbb.question.QuestionService;
 import com.mysite.sbb.user.SiteUser;
 import com.mysite.sbb.user.UserService;
+import jakarta.persistence.criteria.CriteriaBuilder;
 import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.HttpStatus;
 import org.springframework.security.access.prepost.PreAuthorize;
+import org.springframework.security.core.parameters.P;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
@@ -68,5 +70,13 @@ public class AnswerController {
         return String.format("redirect:/question/detail/%s", answer.getQuestion().getId());
     }
 
+    @PreAuthorize("isAuthenticated()")
+    @GetMapping("/vote/{id}")
+    public String answerVote(Principal principal, @PathVariable("id")Integer id){
+        Answer answer = this.answerService.getAnswer(id);
+        SiteUser siteUser = this.userService.getUser(principal.getName());
+        this.answerService.vote(answer, siteUser);
+        return String.format("redirect:/question/detail/%s", answer.getQuestion().getId());
+    }
 
 }

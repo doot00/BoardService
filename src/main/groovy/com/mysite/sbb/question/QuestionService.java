@@ -55,4 +55,10 @@ public class QuestionService {
         this.questionRepository.delete(question);
     }
 
+    // 추천인을 저장할 수 있도록 추천 기능을 QuestionService에 추가한다.
+    public void vote(Question question, SiteUser siteUser) {
+        question.getVoter().add(siteUser);
+        this.questionRepository.save(question);
+    }
+
 }
